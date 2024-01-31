@@ -11,7 +11,7 @@ namespace TravelDeskProject.Models
         public string Email { get; set; }
         public string Password { get; set; }
         public string Address { get; set; }
-        public int MobileNumber { get; set; }        
+        public string MobileNumber { get; set; }        
         public int CreateBy { get; set; }
         public int? UpdateBy { get; set; } = null;
         public DateTime CreatedOn { get; set; }= DateTime.Now;

@@ -60,12 +60,12 @@
             new Role{RoleName="Manager"}
             };
 
+
             foreach (var user in roles)
 
-                dbContext.Roles.Add(user);
-
+            dbContext.Roles.Add(user);
             dbContext.SaveChanges();
-
+            
         }
 
     }

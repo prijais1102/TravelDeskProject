@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using System.Collections.Generic;
 using TravelDeskProject.IRepo;
 using TravelDeskProject.Models;
 using TravelDeskProject.Repo;
@@ -11,18 +12,20 @@ namespace TravelDeskProject.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
-    public class TravelController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly IMemoryCache _memoryCache;
         private TravelDbContext _context;
         IUserRepo _userRepo;
-        public TravelController(IUserRepo userRepo,IMemoryCache memoryCache, TravelDbContext context)
+
+        public UserController(IUserRepo userRepo,IMemoryCache memoryCache, TravelDbContext context)
         {
             _userRepo = userRepo;
             _memoryCache = memoryCache;
             _context = context;
 
         }
+       
         [HttpGet]
         [Route("GetUser/{id}")]
         public IActionResult GetUser(int id)
@@ -36,8 +39,9 @@ namespace TravelDeskProject.Controllers
         [Route("AddUser")]
         public IActionResult AddUser(User user)
         {
-            _userRepo.Add(user);
-            return Ok("Added successfully.");
+
+            string result = _userRepo.Add(user);
+            return Ok(result);
         }
         [HttpGet]
         [Route("AllUsers")]
@@ -75,6 +79,20 @@ namespace TravelDeskProject.Controllers
         {
             _userRepo.EditUser(id,user);
             return Ok("User edited successfully!!!");
+        }
+        [HttpGet]
+        [Route("GetDepartmentNames")]
+        public IActionResult GetDepartmentNames()
+        {
+            List<Department> list= _userRepo.GetDepartmentNames();
+            return Ok(list);
+        }
+        [HttpGet]
+        [Route("GetAllManagers")]
+        public IActionResult GetAllManagers()
+        {
+            List<User> managers= _userRepo.GetAllManagers();
+            return Ok(managers);
         }
     }
 }

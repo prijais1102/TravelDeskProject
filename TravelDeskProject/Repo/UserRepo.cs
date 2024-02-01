@@ -11,12 +11,19 @@ namespace TravelDeskProject.Repo
         {
             _db = db;
         }
-        public void Add(User user)
+        public string Add(User user)
         {
             user.IsActive = true;
-            _db.Users.Add(user);
-            _db.SaveChanges();
-
+            if(!_db.Users.Any(x=>x.Email==user.Email))
+            {
+                _db.Users.Add(user);
+                _db.SaveChanges();
+                return "Added Successfully";
+            }
+            else
+            {
+                return "Email already exists";
+            }
         }
         public User GetUser(int id) 
         { 
@@ -55,6 +62,16 @@ namespace TravelDeskProject.Repo
                 _db.Users.Update(data);
                 _db.SaveChanges();
             }
+        }
+        public List<Department> GetDepartmentNames()
+        {
+            List<Department> list=_db.Departments.ToList();
+            return list;
+        }
+        public List<User> GetAllManagers()
+        {
+            List<User> managers = _db.Users.Where(x => x.RoleId == 4).ToList();
+            return managers;
         }
 
        

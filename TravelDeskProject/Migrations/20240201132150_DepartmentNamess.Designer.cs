@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace TravelDeskProject.Migrations
 {
     [DbContext(typeof(TravelDbContext))]
-    partial class TravelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240201132150_DepartmentNamess")]
+    partial class DepartmentNamess
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,32 +54,6 @@ namespace TravelDeskProject.Migrations
                     b.HasKey("DepartmentId");
 
                     b.ToTable("Departments");
-
-                    b.HasData(
-                        new
-                        {
-                            DepartmentId = 1,
-                            CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 1, 19, 5, 53, 401, DateTimeKind.Local).AddTicks(959),
-                            DepartmentName = "IT",
-                            IsActive = false
-                        },
-                        new
-                        {
-                            DepartmentId = 2,
-                            CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 1, 19, 5, 53, 401, DateTimeKind.Local).AddTicks(974),
-                            DepartmentName = "Sales",
-                            IsActive = false
-                        },
-                        new
-                        {
-                            DepartmentId = 3,
-                            CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 1, 19, 5, 53, 401, DateTimeKind.Local).AddTicks(976),
-                            DepartmentName = "HR",
-                            IsActive = false
-                        });
                 });
 
             modelBuilder.Entity("TravelDeskProject.Models.Role", b =>

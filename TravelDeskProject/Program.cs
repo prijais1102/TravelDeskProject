@@ -1,5 +1,8 @@
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using TravelDeskProject.IRepo;
 using TravelDeskProject.Models;
 using TravelDeskProject.Repo;
@@ -11,7 +14,19 @@ namespace TravelDeskProject
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+                  {
+                      options.TokenValidationParameters = new TokenValidationParameters
+                      {
+                          ValidateIssuer = true,
+                          ValidateAudience = true,
+                          ValidateLifetime = true,
+                          ValidateIssuerSigningKey = true,
+                          ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                          ValidAudience = builder.Configuration["Jwt:Audience"],
+                          IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+                      };
+                  });
             // Add services to the container.
             builder.Services.AddMemoryCache();
             builder.Services.AddControllers();
@@ -20,6 +35,7 @@ namespace TravelDeskProject
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddTransient<IUserRepo, UserRepo>();
+            builder.Services.AddTransient<ILoginRepo, LoginRepo>();
             builder.Services.AddDbContext<TravelDbContext>(x => x.UseSqlServer(builder.Configuration["ConnectionStrings:TravelDatabase"]));
 
             builder.Services.AddScoped<DbInitializer>();
@@ -41,6 +57,7 @@ namespace TravelDeskProject
 
 
             app.UseCors("AllowOrigin");
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

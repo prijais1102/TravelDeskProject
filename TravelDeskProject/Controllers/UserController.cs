@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using TravelDeskProject.IRepo;
 using TravelDeskProject.Models;
 using TravelDeskProject.Repo;
+using TravelDeskProject.ViewModel;
 
 namespace TravelDeskProject.Controllers
 {
@@ -93,6 +94,22 @@ namespace TravelDeskProject.Controllers
         {
             List<User> managers= _userRepo.GetAllManagers();
             return Ok(managers);
+        }
+        [HttpGet]
+        [Route("AllUsersToDisplay")]
+        public List<UserViewModel> AllUsersToDisplay()
+        {
+            List<UserViewModel> users=_userRepo.AllUsersToDisplay();
+            return users;
+
+        }
+        [HttpGet]
+        [Route("GetAllRoles")]
+        public List<Role> GetAllRoles()
+        {
+            List<Role> roles= _userRepo.GetAllRoles();
+
+            return roles;
         }
     }
 }

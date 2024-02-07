@@ -47,16 +47,11 @@ namespace TravelDeskProject.Repo
             if (data != null)
             {
                 data.FirstName = user.FirstName;
-                data.LastName = user.LastName;
-                data.Email = user.Email;
-                data.Password = user.Password;
+                data.LastName = user.LastName;               
                 data.Address = user.Address;
                 data.MobileNumber = user.MobileNumber;
-                data.CreateBy = user.CreateBy;
-                data.CreatedOn = user.CreatedOn;
-                data.UpdateBy = user.UpdateBy;
-                data.UpdatedOn = user.UpdatedOn;
-                data.IsActive = user.IsActive;
+                data.UpdatedBy = 1;
+                data.UpdatedOn = DateTime.Now;
                 data.RoleId = user.RoleId;
                 data.ManagerId = user.ManagerId;
                 data.DepartmentId = user.DepartmentId;
@@ -99,8 +94,58 @@ namespace TravelDeskProject.Repo
             List<Role> roles = _db.Roles.Where(x => x.RoleId == 3 || x.RoleId == 4).ToList();
             return roles;
         }
-        
+        public List<UserViewModel> UserDetails(int id)
+        {
+            var query =
+            (from user in _db.Users
+             join manager in _db.Users on user.ManagerId equals manager.UserId
+             join role in _db.Roles on user.RoleId equals role.RoleId
+             join department in _db.Departments on user.DepartmentId equals department.DepartmentId
+             where user.UserId == id
+             where user.IsActive == true
+             select new UserViewModel
+             {
 
+                 UserId = user.UserId,
+                 FirstName = user.FirstName,
+                 LastName = user.LastName,
+                 RoleName = role.RoleName,
+                 ManagerName = manager.FirstName + " " + manager.LastName,
+                 DepartmentName = department.DepartmentName
+             }).ToList();
+            return query;
+        }
+        
+        public int GetUserId(LoginViewModel loginuser)
+        {
+            var userId=_db.Users.Where(x=>x.Email == loginuser.Email).FirstOrDefault();
+            if (userId == null)
+            {
+                return 0;
+            }
+
+            return userId.UserId;
+        }
+        public string GetRoleName(int roleId)
+        {
+            var roleName=_db.Roles.Where(x=>x.RoleId==roleId).FirstOrDefault();
+            if (roleName == null)
+            {
+                return string.Empty;
+            }
+            return roleName.RoleName;
+
+        }
+        public int GetRoleId(LoginViewModel loginuser)
+        {
+            var roleId=_db.Users.Where(x=>x.Email==loginuser.Email).FirstOrDefault();
+            if(roleId == null)
+            {
+                return 0;
+            }
+            return roleId.RoleId;
+        }
+       
 
     }
 }

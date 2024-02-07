@@ -15,5 +15,9 @@ namespace TravelDeskProject.IRepo
         public List<User> GetAllManagers();
 
         public List<Role> GetAllRoles();
+        public List<UserViewModel> UserDetails(int id);
+        public int GetUserId(LoginViewModel loginuser);
+        public string GetRoleName(int roleId);
+        public int GetRoleId(LoginViewModel loginuser);
     }
 }

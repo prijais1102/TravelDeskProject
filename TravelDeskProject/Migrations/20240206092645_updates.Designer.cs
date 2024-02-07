@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace TravelDeskProject.Migrations
 {
     [DbContext(typeof(TravelDbContext))]
-    [Migration("20240201132150_DepartmentNamess")]
-    partial class DepartmentNamess
+    [Migration("20240206092645_updates")]
+    partial class updates
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,6 +54,32 @@ namespace TravelDeskProject.Migrations
                     b.HasKey("DepartmentId");
 
                     b.ToTable("Departments");
+
+                    b.HasData(
+                        new
+                        {
+                            DepartmentId = 1,
+                            CreateBy = 0,
+                            CreatedOn = new DateTime(2024, 2, 6, 14, 56, 44, 969, DateTimeKind.Local).AddTicks(3499),
+                            DepartmentName = "IT",
+                            IsActive = false
+                        },
+                        new
+                        {
+                            DepartmentId = 2,
+                            CreateBy = 0,
+                            CreatedOn = new DateTime(2024, 2, 6, 14, 56, 44, 969, DateTimeKind.Local).AddTicks(3520),
+                            DepartmentName = "Sales",
+                            IsActive = false
+                        },
+                        new
+                        {
+                            DepartmentId = 3,
+                            CreateBy = 0,
+                            CreatedOn = new DateTime(2024, 2, 6, 14, 56, 44, 969, DateTimeKind.Local).AddTicks(3522),
+                            DepartmentName = "HR",
+                            IsActive = false
+                        });
                 });
 
             modelBuilder.Entity("TravelDeskProject.Models.Role", b =>
@@ -86,6 +112,40 @@ namespace TravelDeskProject.Migrations
                     b.HasKey("RoleId");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            RoleId = 1,
+                            CreateBy = 0,
+                            CreatedOn = new DateTime(2024, 2, 6, 14, 56, 44, 969, DateTimeKind.Local).AddTicks(3694),
+                            IsActive = false,
+                            RoleName = "Admin"
+                        },
+                        new
+                        {
+                            RoleId = 2,
+                            CreateBy = 0,
+                            CreatedOn = new DateTime(2024, 2, 6, 14, 56, 44, 969, DateTimeKind.Local).AddTicks(3695),
+                            IsActive = false,
+                            RoleName = "HRAdmin"
+                        },
+                        new
+                        {
+                            RoleId = 3,
+                            CreateBy = 0,
+                            CreatedOn = new DateTime(2024, 2, 6, 14, 56, 44, 969, DateTimeKind.Local).AddTicks(3696),
+                            IsActive = false,
+                            RoleName = "Employee"
+                        },
+                        new
+                        {
+                            RoleId = 4,
+                            CreateBy = 0,
+                            CreatedOn = new DateTime(2024, 2, 6, 14, 56, 44, 969, DateTimeKind.Local).AddTicks(3697),
+                            IsActive = false,
+                            RoleName = "Manager"
+                        });
                 });
 
             modelBuilder.Entity("TravelDeskProject.Models.User", b =>
@@ -98,15 +158,16 @@ namespace TravelDeskProject.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("CreateBy")
+                    b.Property<int>("CreatedBy")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DepartmentId")
+                    b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -115,14 +176,16 @@ namespace TravelDeskProject.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<int?>("ManagerId")
                         .HasColumnType("int");
@@ -138,7 +201,7 @@ namespace TravelDeskProject.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UpdateBy")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedOn")
@@ -153,13 +216,48 @@ namespace TravelDeskProject.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            Address = "Mzp",
+                            CreatedBy = 1,
+                            CreatedOn = new DateTime(2024, 2, 6, 14, 56, 44, 969, DateTimeKind.Local).AddTicks(3722),
+                            DepartmentId = 1,
+                            Email = "priya@gmail.com",
+                            FirstName = "Priya",
+                            IsActive = true,
+                            LastName = "Jaiswal",
+                            MobileNumber = "6306788371",
+                            Password = "Priya@123",
+                            RoleId = 1
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            Address = "Delhi",
+                            CreatedBy = 1,
+                            CreatedOn = new DateTime(2024, 2, 6, 14, 56, 44, 969, DateTimeKind.Local).AddTicks(3727),
+                            DepartmentId = 2,
+                            Email = "erica@gmail.com",
+                            FirstName = "Erica",
+                            IsActive = true,
+                            LastName = "Attal",
+                            ManagerId = 1,
+                            MobileNumber = "9090909090",
+                            Password = "Erica@123",
+                            RoleId = 3
+                        });
                 });
 
             modelBuilder.Entity("TravelDeskProject.Models.User", b =>
                 {
                     b.HasOne("TravelDeskProject.Models.Department", "Department")
                         .WithMany("User")
-                        .HasForeignKey("DepartmentId");
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("TravelDeskProject.Models.User", "user")
                         .WithMany()

@@ -38,7 +38,6 @@ namespace TravelDeskProject
             builder.Services.AddTransient<ILoginRepo, LoginRepo>();
             builder.Services.AddDbContext<TravelDbContext>(x => x.UseSqlServer(builder.Configuration["ConnectionStrings:TravelDatabase"]));
 
-            builder.Services.AddScoped<DbInitializer>();
 
 
 
@@ -51,7 +50,6 @@ namespace TravelDeskProject
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-            app.UseItToSeedSqlServer();
             app.UseHttpsRedirection();
 
 

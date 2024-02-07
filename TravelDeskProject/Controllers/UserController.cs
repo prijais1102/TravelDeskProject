@@ -19,21 +19,21 @@ namespace TravelDeskProject.Controllers
         private TravelDbContext _context;
         IUserRepo _userRepo;
 
-        public UserController(IUserRepo userRepo,IMemoryCache memoryCache, TravelDbContext context)
+        public UserController(IUserRepo userRepo, IMemoryCache memoryCache, TravelDbContext context)
         {
             _userRepo = userRepo;
             _memoryCache = memoryCache;
             _context = context;
 
         }
-       
+
         [HttpGet]
         [Route("GetUser/{id}")]
         public IActionResult GetUser(int id)
         {
-            User user= _userRepo.GetUser(id);
+            User user = _userRepo.GetUser(id);
             return Ok(user);
-        
+
 
         }
         [HttpPost]
@@ -46,7 +46,7 @@ namespace TravelDeskProject.Controllers
         }
         [HttpGet]
         [Route("AllUsers")]
-        public async Task<IActionResult> AllUsers() 
+        public async Task<IActionResult> AllUsers()
         {
             var cacheKey = "UserList";
             //checks if cache entries exists
@@ -54,7 +54,7 @@ namespace TravelDeskProject.Controllers
             {
                 //calling the server
 
-                UserList = await _context.Users.Where(x=>x.IsActive==true).ToListAsync();
+                UserList = await _context.Users.Where(x => x.IsActive == true).ToListAsync();
                 //setting up cache options
                 var cacheExpiryOptions = new MemoryCacheEntryOptions
                 {
@@ -74,32 +74,32 @@ namespace TravelDeskProject.Controllers
             _userRepo.DeleteUser(id);
             return Ok("User deleted Successfully!!!");
         }
-        [HttpPatch]
+        [HttpPut]
         [Route("EditUser/{id}")]
         public IActionResult EditUser(int id, User user)
         {
-            _userRepo.EditUser(id,user);
+            _userRepo.EditUser(id, user);
             return Ok("User edited successfully!!!");
         }
         [HttpGet]
         [Route("GetDepartmentNames")]
         public IActionResult GetDepartmentNames()
         {
-            List<Department> list= _userRepo.GetDepartmentNames();
+            List<Department> list = _userRepo.GetDepartmentNames();
             return Ok(list);
         }
         [HttpGet]
         [Route("GetAllManagers")]
         public IActionResult GetAllManagers()
         {
-            List<User> managers= _userRepo.GetAllManagers();
+            List<User> managers = _userRepo.GetAllManagers();
             return Ok(managers);
         }
         [HttpGet]
         [Route("AllUsersToDisplay")]
         public List<UserViewModel> AllUsersToDisplay()
         {
-            List<UserViewModel> users=_userRepo.AllUsersToDisplay();
+            List<UserViewModel> users = _userRepo.AllUsersToDisplay();
             return users;
 
         }
@@ -107,9 +107,17 @@ namespace TravelDeskProject.Controllers
         [Route("GetAllRoles")]
         public List<Role> GetAllRoles()
         {
-            List<Role> roles= _userRepo.GetAllRoles();
+            List<Role> roles = _userRepo.GetAllRoles();
 
             return roles;
+        }
+        [HttpGet]
+        [Route("UserDetails/{id}")]
+        public IActionResult UserDetails(int id)
+        {
+            List<UserViewModel> userDetails = _userRepo.UserDetails(id);
+            return Ok(userDetails);
+
         }
     }
 }

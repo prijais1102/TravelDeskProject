@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TravelDeskProject.Migrations
 {
     /// <inheritdoc />
-    public partial class tablesadded : Migration
+    public partial class updates : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -226,129 +226,38 @@ namespace TravelDeskProject.Migrations
                     RequestId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    ProjectId = table.Column<int>(type: "int", nullable: false),
-                    DepartmentId = table.Column<int>(type: "int", nullable: false),
                     ReasonForTravelling = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BookingTypeId = table.Column<int>(type: "int", nullable: false),
-                    AadharNo = table.Column<int>(type: "int", nullable: false),
-                    CreateBy = table.Column<int>(type: "int", nullable: false),
-                    UpdateBy = table.Column<int>(type: "int", nullable: true),
+                    ProjectId = table.Column<int>(type: "int", nullable: false),
+                    ManagerId = table.Column<int>(type: "int", nullable: false),
+                    StatusId = table.Column<int>(type: "int", nullable: false),
+                    StatusReason = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AadharNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NumberOfDays = table.Column<int>(type: "int", nullable: true),
+                    MealTypeId = table.Column<int>(type: "int", nullable: true),
+                    MealPreferenceId = table.Column<int>(type: "int", nullable: true),
+                    StayDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    HotelLocationId = table.Column<int>(type: "int", nullable: false),
+                    FlightTypeId = table.Column<int>(type: "int", nullable: true),
+                    To = table.Column<int>(type: "int", nullable: true),
+                    From = table.Column<int>(type: "int", nullable: true),
+                    PassportNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FlightDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                    UpdatedBy = table.Column<int>(type: "int", nullable: true),
+                    UpdatedOn = table.Column<int>(type: "int", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    BookingId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Requests", x => x.RequestId);
                     table.ForeignKey(
-                        name: "FK_Requests_Bookings_BookingTypeId",
-                        column: x => x.BookingTypeId,
-                        principalTable: "Bookings",
-                        principalColumn: "BookingId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Requests_Departments_DepartmentId",
-                        column: x => x.DepartmentId,
-                        principalTable: "Departments",
-                        principalColumn: "DepartmentId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Requests_Projects_ProjectId",
-                        column: x => x.ProjectId,
-                        principalTable: "Projects",
-                        principalColumn: "ProjectId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Requests_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.NoAction);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AirTicketBookings",
-                columns: table => new
-                {
-                    AirTicketBookingId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FlightTypeId = table.Column<int>(type: "int", nullable: false),
-                    PassportNo = table.Column<int>(type: "int", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    LocationId = table.Column<int>(type: "int", nullable: false),
-                    CreateBy = table.Column<int>(type: "int", nullable: false),
-                    UpdateBy = table.Column<int>(type: "int", nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    RequestId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AirTicketBookings", x => x.AirTicketBookingId);
-                    table.ForeignKey(
-                        name: "FK_AirTicketBookings_FlightTypes_FlightTypeId",
-                        column: x => x.FlightTypeId,
-                        principalTable: "FlightTypes",
-                        principalColumn: "FlightTypeId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AirTicketBookings_Locations_LocationId",
-                        column: x => x.LocationId,
-                        principalTable: "Locations",
-                        principalColumn: "LocationId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AirTicketBookings_Requests_RequestId",
-                        column: x => x.RequestId,
-                        principalTable: "Requests",
-                        principalColumn: "RequestId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "HotelBookingTypes",
-                columns: table => new
-                {
-                    HotelBookingId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RequestId = table.Column<int>(type: "int", nullable: false),
-                    LocationId = table.Column<int>(type: "int", nullable: false),
-                    MealTypeId = table.Column<int>(type: "int", nullable: false),
-                    MealPreferenceId = table.Column<int>(type: "int", nullable: false),
-                    NoOfDays = table.Column<int>(type: "int", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateBy = table.Column<int>(type: "int", nullable: false),
-                    UpdateBy = table.Column<int>(type: "int", nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_HotelBookingTypes", x => x.HotelBookingId);
-                    table.ForeignKey(
-                        name: "FK_HotelBookingTypes_Locations_LocationId",
-                        column: x => x.LocationId,
-                        principalTable: "Locations",
-                        principalColumn: "LocationId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_HotelBookingTypes_MealPreferenceTypes_MealPreferenceId",
-                        column: x => x.MealPreferenceId,
-                        principalTable: "MealPreferenceTypes",
-                        principalColumn: "MealPreferenceTypeId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_HotelBookingTypes_MealTypes_MealTypeId",
-                        column: x => x.MealTypeId,
-                        principalTable: "MealTypes",
-                        principalColumn: "MealTypeId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_HotelBookingTypes_Requests_RequestId",
-                        column: x => x.RequestId,
-                        principalTable: "Requests",
-                        principalColumn: "RequestId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -367,9 +276,9 @@ namespace TravelDeskProject.Migrations
                 columns: new[] { "DepartmentId", "CreateBy", "CreatedOn", "DepartmentName", "IsActive", "UpdateBy", "UpdatedOn" },
                 values: new object[,]
                 {
-                    { 1, 0, new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6181), "IT", false, null, null },
-                    { 2, 0, new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6182), "Sales", false, null, null },
-                    { 3, 0, new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6184), "HR", false, null, null }
+                    { 1, 0, new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6983), "IT", false, null, null },
+                    { 2, 0, new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6988), "Sales", false, null, null },
+                    { 3, 0, new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6990), "HR", false, null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -377,8 +286,8 @@ namespace TravelDeskProject.Migrations
                 columns: new[] { "FlightTypeId", "CreateBy", "CreatedOn", "FlightTypeName", "IsActive", "UpdateBy", "UpdatedOn" },
                 values: new object[,]
                 {
-                    { 1, 0, new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6118), "Domestic", false, null, null },
-                    { 2, 0, new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6121), "International", false, null, null }
+                    { 1, 0, new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6908), "Domestic", false, null, null },
+                    { 2, 0, new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6911), "International", false, null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -386,10 +295,10 @@ namespace TravelDeskProject.Migrations
                 columns: new[] { "LocationId", "City", "Country", "CreateBy", "CreatedOn", "IsActive", "UpdateBy", "UpdatedOn" },
                 values: new object[,]
                 {
-                    { 1, "Noida", "India", 0, new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6159), false, null, null },
-                    { 2, "Pune", "India", 0, new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6161), false, null, null },
-                    { 3, "London", "England", 0, new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6162), false, null, null },
-                    { 4, "Dubai", "United Arab Emirates", 0, new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6163), false, null, null }
+                    { 1, "Noida", "India", 0, new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6959), false, null, null },
+                    { 2, "Pune", "India", 0, new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6961), false, null, null },
+                    { 3, "London", "England", 0, new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6963), false, null, null },
+                    { 4, "Dubai", "United Arab Emirates", 0, new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6964), false, null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -397,8 +306,8 @@ namespace TravelDeskProject.Migrations
                 columns: new[] { "MealPreferenceTypeId", "CreateBy", "CreatedOn", "IsActive", "MealPreferenceName", "UpdateBy", "UpdatedOn" },
                 values: new object[,]
                 {
-                    { 1, 0, new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(5927), false, "Veg", null, null },
-                    { 2, 0, new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(5946), false, "Non-Veg", null, null }
+                    { 1, 0, new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6823), false, "Veg", null, null },
+                    { 2, 0, new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6826), false, "Non-Veg", null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -406,9 +315,19 @@ namespace TravelDeskProject.Migrations
                 columns: new[] { "MealTypeId", "CreateBy", "CreatedOn", "IsActive", "MealTypeName", "UpdateBy", "UpdatedOn" },
                 values: new object[,]
                 {
-                    { 1, 0, new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6077), false, "Lunch", null, null },
-                    { 2, 0, new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6078), false, "Dinner", null, null },
-                    { 3, 0, new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6079), false, "Both", null, null }
+                    { 1, 0, new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6853), false, "Lunch", null, null },
+                    { 2, 0, new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6855), false, "Dinner", null, null },
+                    { 3, 0, new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6856), false, "Both", null, null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Projects",
+                columns: new[] { "ProjectId", "CreateBy", "CreatedOn", "IsActive", "ProjectName", "UpdateBy", "UpdatedOn" },
+                values: new object[,]
+                {
+                    { 1, 0, new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6589), false, "GBS-UK", null, null },
+                    { 2, 0, new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6605), false, "GBS-Dubai", null, null },
+                    { 3, 0, new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6606), false, "GBS-Noida", null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -416,10 +335,10 @@ namespace TravelDeskProject.Migrations
                 columns: new[] { "RoleId", "CreateBy", "CreatedOn", "IsActive", "RoleName", "UpdateBy", "UpdatedOn" },
                 values: new object[,]
                 {
-                    { 1, 0, new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6201), false, "Admin", null, null },
-                    { 2, 0, new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6203), false, "HRAdmin", null, null },
-                    { 3, 0, new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6204), false, "Employee", null, null },
-                    { 4, 0, new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6205), false, "Manager", null, null }
+                    { 1, 0, new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(7012), false, "Admin", null, null },
+                    { 2, 0, new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(7015), false, "HRAdmin", null, null },
+                    { 3, 0, new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(7017), false, "Employee", null, null },
+                    { 4, 0, new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(7018), false, "Manager", null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -427,9 +346,9 @@ namespace TravelDeskProject.Migrations
                 columns: new[] { "StatusId", "CreateBy", "CreatedOn", "IsActive", "StatusName", "UpdateBy", "UpdatedOn" },
                 values: new object[,]
                 {
-                    { 1, 0, new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6137), false, "Pending", null, null },
-                    { 2, 0, new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6139), false, "Rejected", null, null },
-                    { 3, 0, new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6140), false, "Approved", null, null }
+                    { 1, 0, new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6934), false, "Pending", null, null },
+                    { 2, 0, new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6937), false, "Rejected", null, null },
+                    { 3, 0, new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6938), false, "Approved", null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -437,59 +356,9 @@ namespace TravelDeskProject.Migrations
                 columns: new[] { "UserId", "Address", "CreatedBy", "CreatedOn", "DepartmentId", "Email", "FirstName", "IsActive", "LastName", "ManagerId", "MobileNumber", "Password", "RoleId", "UpdatedBy", "UpdatedOn" },
                 values: new object[,]
                 {
-                    { 1, "Mzp", 1, new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6229), 1, "priya@gmail.com", "Priya", true, "Jaiswal", null, "6306788371", "Priya@123", 1, null, null },
-                    { 2, "Delhi", 1, new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6233), 2, "erica@gmail.com", "Erica", true, "Attal", 1, "9090909090", "Erica@123", 4, null, null }
+                    { 1, "Mzp", 1, new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(7051), 1, "priya@gmail.com", "Priya", true, "Jaiswal", null, "6306788371", "Priya@123", 1, null, null },
+                    { 2, "Delhi", 1, new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(7057), 2, "erica@gmail.com", "Erica", true, "Attal", 1, "9090909090", "Erica@123", 4, null, null }
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AirTicketBookings_FlightTypeId",
-                table: "AirTicketBookings",
-                column: "FlightTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AirTicketBookings_LocationId",
-                table: "AirTicketBookings",
-                column: "LocationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AirTicketBookings_RequestId",
-                table: "AirTicketBookings",
-                column: "RequestId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_HotelBookingTypes_LocationId",
-                table: "HotelBookingTypes",
-                column: "LocationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_HotelBookingTypes_MealPreferenceId",
-                table: "HotelBookingTypes",
-                column: "MealPreferenceId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_HotelBookingTypes_MealTypeId",
-                table: "HotelBookingTypes",
-                column: "MealTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_HotelBookingTypes_RequestId",
-                table: "HotelBookingTypes",
-                column: "RequestId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Requests_BookingTypeId",
-                table: "Requests",
-                column: "BookingTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Requests_DepartmentId",
-                table: "Requests",
-                column: "DepartmentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Requests_ProjectId",
-                table: "Requests",
-                column: "ProjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Requests_UserId",
@@ -516,13 +385,7 @@ namespace TravelDeskProject.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AirTicketBookings");
-
-            migrationBuilder.DropTable(
-                name: "HotelBookingTypes");
-
-            migrationBuilder.DropTable(
-                name: "Statuss");
+                name: "Bookings");
 
             migrationBuilder.DropTable(
                 name: "FlightTypes");
@@ -537,13 +400,13 @@ namespace TravelDeskProject.Migrations
                 name: "MealTypes");
 
             migrationBuilder.DropTable(
+                name: "Projects");
+
+            migrationBuilder.DropTable(
                 name: "Requests");
 
             migrationBuilder.DropTable(
-                name: "Bookings");
-
-            migrationBuilder.DropTable(
-                name: "Projects");
+                name: "Statuss");
 
             migrationBuilder.DropTable(
                 name: "Users");

@@ -21,53 +21,93 @@ namespace TravelDeskProject.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("TravelDeskProject.Models.AirTicketBooking", b =>
+            modelBuilder.Entity("Request", b =>
                 {
-                    b.Property<int>("AirTicketBookingId")
+                    b.Property<int>("RequestId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AirTicketBookingId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RequestId"));
 
-                    b.Property<int>("CreateBy")
+                    b.Property<string>("AadharNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("BookingId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BookingTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CreatedBy")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("Date")
+                    b.Property<DateTime?>("FlightDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("FlightTypeId")
+                    b.Property<int?>("FlightTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("From")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HotelLocationId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<int>("LocationId")
+                    b.Property<int>("ManagerId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PassportNo")
+                    b.Property<int?>("MealPreferenceId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RequestId")
+                    b.Property<int?>("MealTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UpdateBy")
+                    b.Property<int?>("NumberOfDays")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("UpdatedOn")
+                    b.Property<string>("PassportNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ReasonForTravelling")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StatusReason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("StayDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("AirTicketBookingId");
+                    b.Property<int?>("To")
+                        .HasColumnType("int");
 
-                    b.HasIndex("FlightTypeId");
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("int");
 
-                    b.HasIndex("LocationId");
+                    b.Property<int?>("UpdatedOn")
+                        .HasColumnType("int");
 
-                    b.HasIndex("RequestId");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
-                    b.ToTable("AirTicketBookings");
+                    b.HasKey("RequestId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Requests");
                 });
 
             modelBuilder.Entity("TravelDeskProject.Models.Booking", b =>
@@ -164,7 +204,7 @@ namespace TravelDeskProject.Migrations
                         {
                             DepartmentId = 1,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6181),
+                            CreatedOn = new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6983),
                             DepartmentName = "IT",
                             IsActive = false
                         },
@@ -172,7 +212,7 @@ namespace TravelDeskProject.Migrations
                         {
                             DepartmentId = 2,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6182),
+                            CreatedOn = new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6988),
                             DepartmentName = "Sales",
                             IsActive = false
                         },
@@ -180,7 +220,7 @@ namespace TravelDeskProject.Migrations
                         {
                             DepartmentId = 3,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6184),
+                            CreatedOn = new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6990),
                             DepartmentName = "HR",
                             IsActive = false
                         });
@@ -222,7 +262,7 @@ namespace TravelDeskProject.Migrations
                         {
                             FlightTypeId = 1,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6118),
+                            CreatedOn = new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6908),
                             FlightTypeName = "Domestic",
                             IsActive = false
                         },
@@ -230,64 +270,10 @@ namespace TravelDeskProject.Migrations
                         {
                             FlightTypeId = 2,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6121),
+                            CreatedOn = new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6911),
                             FlightTypeName = "International",
                             IsActive = false
                         });
-                });
-
-            modelBuilder.Entity("TravelDeskProject.Models.HotelBooking", b =>
-                {
-                    b.Property<int>("HotelBookingId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HotelBookingId"));
-
-                    b.Property<int>("CreateBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("LocationId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MealPreferenceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MealTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NoOfDays")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RequestId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UpdateBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("HotelBookingId");
-
-                    b.HasIndex("LocationId");
-
-                    b.HasIndex("MealPreferenceId");
-
-                    b.HasIndex("MealTypeId");
-
-                    b.HasIndex("RequestId");
-
-                    b.ToTable("HotelBookingTypes");
                 });
 
             modelBuilder.Entity("TravelDeskProject.Models.Location", b =>
@@ -332,7 +318,7 @@ namespace TravelDeskProject.Migrations
                             City = "Noida",
                             Country = "India",
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6159),
+                            CreatedOn = new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6959),
                             IsActive = false
                         },
                         new
@@ -341,7 +327,7 @@ namespace TravelDeskProject.Migrations
                             City = "Pune",
                             Country = "India",
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6161),
+                            CreatedOn = new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6961),
                             IsActive = false
                         },
                         new
@@ -350,7 +336,7 @@ namespace TravelDeskProject.Migrations
                             City = "London",
                             Country = "England",
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6162),
+                            CreatedOn = new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6963),
                             IsActive = false
                         },
                         new
@@ -359,7 +345,7 @@ namespace TravelDeskProject.Migrations
                             City = "Dubai",
                             Country = "United Arab Emirates",
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6163),
+                            CreatedOn = new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6964),
                             IsActive = false
                         });
                 });
@@ -400,7 +386,7 @@ namespace TravelDeskProject.Migrations
                         {
                             MealPreferenceTypeId = 1,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(5927),
+                            CreatedOn = new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6823),
                             IsActive = false,
                             MealPreferenceName = "Veg"
                         },
@@ -408,7 +394,7 @@ namespace TravelDeskProject.Migrations
                         {
                             MealPreferenceTypeId = 2,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(5946),
+                            CreatedOn = new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6826),
                             IsActive = false,
                             MealPreferenceName = "Non-Veg"
                         });
@@ -450,7 +436,7 @@ namespace TravelDeskProject.Migrations
                         {
                             MealTypeId = 1,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6077),
+                            CreatedOn = new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6853),
                             IsActive = false,
                             MealTypeName = "Lunch"
                         },
@@ -458,7 +444,7 @@ namespace TravelDeskProject.Migrations
                         {
                             MealTypeId = 2,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6078),
+                            CreatedOn = new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6855),
                             IsActive = false,
                             MealTypeName = "Dinner"
                         },
@@ -466,7 +452,7 @@ namespace TravelDeskProject.Migrations
                         {
                             MealTypeId = 3,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6079),
+                            CreatedOn = new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6856),
                             IsActive = false,
                             MealTypeName = "Both"
                         });
@@ -502,61 +488,32 @@ namespace TravelDeskProject.Migrations
                     b.HasKey("ProjectId");
 
                     b.ToTable("Projects");
-                });
 
-            modelBuilder.Entity("TravelDeskProject.Models.Request", b =>
-                {
-                    b.Property<int>("RequestId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RequestId"));
-
-                    b.Property<int>("AadharNo")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BookingTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CreateBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("DepartmentId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ReasonForTravelling")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("UpdateBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RequestId");
-
-                    b.HasIndex("BookingTypeId");
-
-                    b.HasIndex("DepartmentId");
-
-                    b.HasIndex("ProjectId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Requests");
+                    b.HasData(
+                        new
+                        {
+                            ProjectId = 1,
+                            CreateBy = 0,
+                            CreatedOn = new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6589),
+                            IsActive = false,
+                            ProjectName = "GBS-UK"
+                        },
+                        new
+                        {
+                            ProjectId = 2,
+                            CreateBy = 0,
+                            CreatedOn = new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6605),
+                            IsActive = false,
+                            ProjectName = "GBS-Dubai"
+                        },
+                        new
+                        {
+                            ProjectId = 3,
+                            CreateBy = 0,
+                            CreatedOn = new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6606),
+                            IsActive = false,
+                            ProjectName = "GBS-Noida"
+                        });
                 });
 
             modelBuilder.Entity("TravelDeskProject.Models.Role", b =>
@@ -595,7 +552,7 @@ namespace TravelDeskProject.Migrations
                         {
                             RoleId = 1,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6201),
+                            CreatedOn = new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(7012),
                             IsActive = false,
                             RoleName = "Admin"
                         },
@@ -603,7 +560,7 @@ namespace TravelDeskProject.Migrations
                         {
                             RoleId = 2,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6203),
+                            CreatedOn = new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(7015),
                             IsActive = false,
                             RoleName = "HRAdmin"
                         },
@@ -611,7 +568,7 @@ namespace TravelDeskProject.Migrations
                         {
                             RoleId = 3,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6204),
+                            CreatedOn = new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(7017),
                             IsActive = false,
                             RoleName = "Employee"
                         },
@@ -619,7 +576,7 @@ namespace TravelDeskProject.Migrations
                         {
                             RoleId = 4,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6205),
+                            CreatedOn = new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(7018),
                             IsActive = false,
                             RoleName = "Manager"
                         });
@@ -661,7 +618,7 @@ namespace TravelDeskProject.Migrations
                         {
                             StatusId = 1,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6137),
+                            CreatedOn = new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6934),
                             IsActive = false,
                             StatusName = "Pending"
                         },
@@ -669,7 +626,7 @@ namespace TravelDeskProject.Migrations
                         {
                             StatusId = 2,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6139),
+                            CreatedOn = new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6937),
                             IsActive = false,
                             StatusName = "Rejected"
                         },
@@ -677,7 +634,7 @@ namespace TravelDeskProject.Migrations
                         {
                             StatusId = 3,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6140),
+                            CreatedOn = new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(6938),
                             IsActive = false,
                             StatusName = "Approved"
                         });
@@ -758,7 +715,7 @@ namespace TravelDeskProject.Migrations
                             UserId = 1,
                             Address = "Mzp",
                             CreatedBy = 1,
-                            CreatedOn = new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6229),
+                            CreatedOn = new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(7051),
                             DepartmentId = 1,
                             Email = "priya@gmail.com",
                             FirstName = "Priya",
@@ -773,7 +730,7 @@ namespace TravelDeskProject.Migrations
                             UserId = 2,
                             Address = "Delhi",
                             CreatedBy = 1,
-                            CreatedOn = new DateTime(2024, 2, 14, 11, 22, 45, 326, DateTimeKind.Local).AddTicks(6233),
+                            CreatedOn = new DateTime(2024, 2, 14, 19, 12, 12, 478, DateTimeKind.Local).AddTicks(7057),
                             DepartmentId = 2,
                             Email = "erica@gmail.com",
                             FirstName = "Erica",
@@ -786,95 +743,13 @@ namespace TravelDeskProject.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TravelDeskProject.Models.AirTicketBooking", b =>
+            modelBuilder.Entity("Request", b =>
                 {
-                    b.HasOne("TravelDeskProject.Models.FlightType", "FlightType")
-                        .WithMany()
-                        .HasForeignKey("FlightTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TravelDeskProject.Models.Location", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TravelDeskProject.Models.Request", null)
-                        .WithMany("AirTickets")
-                        .HasForeignKey("RequestId");
-
-                    b.Navigation("FlightType");
-
-                    b.Navigation("Location");
-                });
-
-            modelBuilder.Entity("TravelDeskProject.Models.HotelBooking", b =>
-                {
-                    b.HasOne("TravelDeskProject.Models.Location", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TravelDeskProject.Models.MealPreferenceType", "MealPreference")
-                        .WithMany()
-                        .HasForeignKey("MealPreferenceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TravelDeskProject.Models.MealType", "MealType")
-                        .WithMany()
-                        .HasForeignKey("MealTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TravelDeskProject.Models.Request", "Request")
-                        .WithMany("Hotels")
-                        .HasForeignKey("RequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Location");
-
-                    b.Navigation("MealPreference");
-
-                    b.Navigation("MealType");
-
-                    b.Navigation("Request");
-                });
-
-            modelBuilder.Entity("TravelDeskProject.Models.Request", b =>
-                {
-                    b.HasOne("TravelDeskProject.Models.Booking", "BookingType")
-                        .WithMany()
-                        .HasForeignKey("BookingTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TravelDeskProject.Models.Department", "Department")
-                        .WithMany()
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TravelDeskProject.Models.Project", "Project")
-                        .WithMany()
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("TravelDeskProject.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("BookingType");
-
-                    b.Navigation("Department");
-
-                    b.Navigation("Project");
 
                     b.Navigation("User");
                 });
@@ -907,13 +782,6 @@ namespace TravelDeskProject.Migrations
             modelBuilder.Entity("TravelDeskProject.Models.Department", b =>
                 {
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("TravelDeskProject.Models.Request", b =>
-                {
-                    b.Navigation("AirTickets");
-
-                    b.Navigation("Hotels");
                 });
 
             modelBuilder.Entity("TravelDeskProject.Models.Role", b =>

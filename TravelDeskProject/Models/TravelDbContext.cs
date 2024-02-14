@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
@@ -21,6 +22,10 @@ public class TravelDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Project>().HasData(
+            new() { ProjectId = 1, ProjectName = "GBS-UK" },
+            new() { ProjectId = 2, ProjectName = "GBS-Dubai" },
+            new() { ProjectId = 3, ProjectName = "GBS-Noida" });
         modelBuilder.Entity<MealPreferenceType>().HasData(
             new() { MealPreferenceTypeId = 1, MealPreferenceName = "Veg" },
             new() { MealPreferenceTypeId = 2, MealPreferenceName = "Non-Veg" }
@@ -93,10 +98,8 @@ public class TravelDbContext : DbContext
     public DbSet<Role> Roles { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Department> Departments { get; set; }
-    public DbSet<AirTicketBooking> AirTicketBookings { get; set; }
     public DbSet<Booking> Bookings { get; set; }
     public DbSet<FlightType> FlightTypes { get; set; }
-    public DbSet<HotelBooking> HotelBookingTypes { get; set; }
     public DbSet<Location> Locations { get; set; }
     public DbSet<MealPreferenceType> MealPreferenceTypes { get; set;}
     public DbSet<MealType> MealTypes { get; set; }

@@ -1,28 +1,43 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using TravelDeskProject.Models;
 
-namespace TravelDeskProject.Models
+
+public class Request
 {
-    public class Request
-    {
-        public int RequestId { get; set; }
-        public int UserId { get; set; }
-        public int ProjectId {  get; set; }
-        public int DepartmentId { get; set; }
-        public string ReasonForTravelling { get; set; }
-        public int BookingTypeId { get; set; }
-        public int AadharNo { get; set; }
-        [NotMapped]
-        public IFormFile AadharCard { get; set; }
-        public int CreateBy { get; set; }
-        public int? UpdateBy { get; set; } = null;
-        public DateTime CreatedOn { get; set; } = DateTime.Now;
-        public DateTime? UpdatedOn { get; set; }
-        public bool IsActive { get; set; }
-        public User? User { get; set; }
-        public Project? Project { get; set; }
-        public Department? Department { get; set; }
-        public Booking? BookingType { get; set; }
-        public ICollection<HotelBooking> Hotels { get; set; }
-        public ICollection<AirTicketBooking> AirTickets { get; set; }
-    }
+    [Key]
+    public int RequestId { get; set; }
+    public int UserId { get; set; }
+    public string ReasonForTravelling { get; set; }
+    public int BookingTypeId { get; set; }
+    public int ProjectId { get; set; }
+    public int ManagerId { get; set; }
+    public int StatusId { get; set; }
+    public string? StatusReason { get; set; }
+    public string AadharNo { get; set; }
+
+    //HotelBooking
+    public int? NumberOfDays { get; set; }
+    public int? MealTypeId { get; set; }
+    public int? MealPreferenceId { get; set; }
+    public DateTime? StayDate { get; set; }
+    public int? HotelLocationId { get; set; }
+
+    //AirTicketBooking
+    public int? FlightTypeId { get; set; }
+    public int? To { get; set; }
+    public int? From { get; set; }
+    public string? PassportNo { get; set; }
+    public DateTime? FlightDate { get; set; }
+
+    public int CreatedBy { get; set; }
+    public DateTime CreatedOn { get; set; }
+    public int? UpdatedBy { get; set; }
+    public int? UpdatedOn { get; set; }
+    public bool IsActive { get; set; }
+    //BookingId will be generated.
+    public int? BookingId { get; set; }
+
+    [ForeignKey("UserId")]
+    public User? User { get; set; }
 }

@@ -21,16 +21,40 @@ public class TravelDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        //Seeding Country Master Data using HasData method
-            modelBuilder.Entity<Department>().HasData(
-            new() { DepartmentId = 1, DepartmentName = "IT" },
-            new() { DepartmentId = 2, DepartmentName = "Sales" },
-            new() { DepartmentId = 3, DepartmentName = "HR" });
+        modelBuilder.Entity<MealPreferenceType>().HasData(
+            new() { MealPreferenceTypeId = 1, MealPreferenceName = "Veg" },
+            new() { MealPreferenceTypeId = 2, MealPreferenceName = "Non-Veg" }
+            );
+        modelBuilder.Entity<MealType>().HasData(
+            new() { MealTypeId = 1, MealTypeName = "Lunch" },
+             new() { MealTypeId = 2, MealTypeName = "Dinner" },
+              new() { MealTypeId = 3, MealTypeName = "Both" });
+        modelBuilder.Entity<Booking>().HasData(
+            new() { BookingId = 1, BookingTypeName = "Air ticket Only" },
+             new() { BookingId = 2, BookingTypeName = "Hotel Only" },
+              new() { BookingId = 3, BookingTypeName = "Both" });
+        modelBuilder.Entity<FlightType>().HasData(
+            new() { FlightTypeId = 1, FlightTypeName = "Domestic" },
+             new() { FlightTypeId = 2, FlightTypeName = "International" });
+        modelBuilder.Entity<Status>().HasData(
+            new() { StatusId = 1, StatusName = "Pending" },
+            new() { StatusId = 2, StatusName = "Rejected" },
+            new() { StatusId = 3, StatusName = "Approved" });
+        modelBuilder.Entity<Location>().HasData(
+            new() { LocationId = 1, City = "Noida", Country = "India" },
+            new() { LocationId = 2, City = "Pune", Country = "India" },
+            new() { LocationId = 3, City = "London", Country = "England" },
+            new() { LocationId = 4, City = "Dubai", Country = "United Arab Emirates" });
+
+        modelBuilder.Entity<Department>().HasData(
+        new() { DepartmentId = 1, DepartmentName = "IT" },
+        new() { DepartmentId = 2, DepartmentName = "Sales" },
+        new() { DepartmentId = 3, DepartmentName = "HR" });
         modelBuilder.Entity<Role>().HasData(
        new() { RoleId = 1, RoleName = "Admin" },
        new() { RoleId = 2, RoleName = "HRAdmin" },
        new() { RoleId = 3, RoleName = "Employee" },
-       new() { RoleId = 4, RoleName = "Manager"});
+       new() { RoleId = 4, RoleName = "Manager" });
 
         modelBuilder.Entity<User>().HasData(
             new User
@@ -47,7 +71,7 @@ public class TravelDbContext : DbContext
                 IsActive = true,
                 RoleId = 1,
                 DepartmentId = 1,
-                ManagerId=null
+                ManagerId = null
             },
         new User
         {
@@ -69,4 +93,15 @@ public class TravelDbContext : DbContext
     public DbSet<Role> Roles { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Department> Departments { get; set; }
+    public DbSet<AirTicketBooking> AirTicketBookings { get; set; }
+    public DbSet<Booking> Bookings { get; set; }
+    public DbSet<FlightType> FlightTypes { get; set; }
+    public DbSet<HotelBooking> HotelBookingTypes { get; set; }
+    public DbSet<Location> Locations { get; set; }
+    public DbSet<MealPreferenceType> MealPreferenceTypes { get; set;}
+    public DbSet<MealType> MealTypes { get; set; }
+    public DbSet<Project> Projects { get; set; }
+    public DbSet<Request> Requests { get; set; }
+    public DbSet<Status> Statuss { get; set; }
+
 }

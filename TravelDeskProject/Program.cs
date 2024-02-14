@@ -36,6 +36,7 @@ namespace TravelDeskProject
             builder.Services.AddSwaggerGen();
             builder.Services.AddTransient<IUserRepo, UserRepo>();
             builder.Services.AddTransient<ILoginRepo, LoginRepo>();
+            builder.Services.AddTransient<IRequestRepo, RequestRepo>();
             builder.Services.AddDbContext<TravelDbContext>(x => x.UseSqlServer(builder.Configuration["ConnectionStrings:TravelDatabase"]));
 
 

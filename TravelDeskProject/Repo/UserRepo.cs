@@ -47,7 +47,7 @@ namespace TravelDeskProject.Repo
             if (data != null)
             {
                 data.FirstName = user.FirstName;
-                data.LastName = user.LastName;               
+                data.LastName = user.LastName;
                 data.Address = user.Address;
                 data.MobileNumber = user.MobileNumber;
                 data.UpdatedBy = 1;
@@ -73,19 +73,19 @@ namespace TravelDeskProject.Repo
         {
             var query =
             (from user in _db.Users
-            join manager in _db.Users on user.ManagerId equals manager.UserId
-            join role in _db.Roles on user.RoleId equals role.RoleId
-            join department in _db.Departments on user.DepartmentId equals department.DepartmentId
-            where user.IsActive == true
-            select new UserViewModel
-            {
-            UserId = user.UserId,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            RoleName = role.RoleName,
-            ManagerName = manager.FirstName + " " + manager.LastName,
-            DepartmentName = department.DepartmentName
-            }).ToList();
+             join manager in _db.Users on user.ManagerId equals manager.UserId
+             join role in _db.Roles on user.RoleId equals role.RoleId
+             join department in _db.Departments on user.DepartmentId equals department.DepartmentId
+             where user.IsActive == true
+             select new UserViewModel
+             {
+                 UserId = user.UserId,
+                 FirstName = user.FirstName,
+                 LastName = user.LastName,
+                 RoleName = role.RoleName,
+                 ManagerName = manager.FirstName + " " + manager.LastName,
+                 DepartmentName = department.DepartmentName
+             }).ToList();
             return query;
 
         }
@@ -115,10 +115,10 @@ namespace TravelDeskProject.Repo
              }).ToList();
             return query;
         }
-        
+
         public int GetUserId(LoginViewModel loginuser)
         {
-            var userId=_db.Users.Where(x=>x.Email == loginuser.Email).FirstOrDefault();
+            var userId = _db.Users.Where(x => x.Email == loginuser.Email).FirstOrDefault();
             if (userId == null)
             {
                 return 0;
@@ -128,7 +128,7 @@ namespace TravelDeskProject.Repo
         }
         public string GetRoleName(int roleId)
         {
-            var roleName=_db.Roles.Where(x=>x.RoleId==roleId).FirstOrDefault();
+            var roleName = _db.Roles.Where(x => x.RoleId == roleId).FirstOrDefault();
             if (roleName == null)
             {
                 return string.Empty;
@@ -138,14 +138,14 @@ namespace TravelDeskProject.Repo
         }
         public int GetRoleId(LoginViewModel loginuser)
         {
-            var roleId=_db.Users.Where(x=>x.Email==loginuser.Email).FirstOrDefault();
-            if(roleId == null)
+            var roleId = _db.Users.Where(x => x.Email == loginuser.Email).FirstOrDefault();
+            if (roleId == null)
             {
                 return 0;
             }
             return roleId.RoleId;
         }
-       
+      
 
     }
 }

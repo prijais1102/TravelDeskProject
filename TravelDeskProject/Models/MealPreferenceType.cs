@@ -1,14 +1,16 @@
-﻿namespace TravelDeskProject.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TravelDeskProject.Models
 {
-    public class Role
+    public class MealPreferenceType
     {
-        public int RoleId { get; set; }
-        public string RoleName { get; set; }        
+        [Key]
+        public int MealPreferenceTypeId { get; set; }
+        public string MealPreferenceName { get; set; }
         public int CreateBy { get; set; }
         public int? UpdateBy { get; set; } = null;
         public DateTime CreatedOn { get; set; } = DateTime.Now;
         public DateTime? UpdatedOn { get; set; }
         public bool IsActive { get; set; }
-        public ICollection<User> Users { get; set; }
     }
 }

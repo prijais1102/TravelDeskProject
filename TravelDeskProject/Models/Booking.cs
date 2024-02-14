@@ -1,14 +1,13 @@
 ﻿namespace TravelDeskProject.Models
 {
-    public class Role
+    public class Booking
     {
-        public int RoleId { get; set; }
-        public string RoleName { get; set; }        
+        public int BookingId { get; set; }
+        public string BookingTypeName { get; set; }
         public int CreateBy { get; set; }
         public int? UpdateBy { get; set; } = null;
-        public DateTime CreatedOn { get; set; } = DateTime.Now;
+        public DateTime CreatedOn { get; set; } 
         public DateTime? UpdatedOn { get; set; }
         public bool IsActive { get; set; }
-        public ICollection<User> Users { get; set; }
     }
 }

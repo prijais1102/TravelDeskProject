@@ -19,5 +19,8 @@ namespace TravelDeskProject.IRepo
         public int GetUserId(LoginViewModel loginuser);
         public string GetRoleName(int roleId);
         public int GetRoleId(LoginViewModel loginuser);
+        public string GetDepartmentName(LoginViewModel loginuser);
+        public int GetDepartmentId(LoginViewModel loginuser);
+        public string GetFirstName(LoginViewModel loginuser);
     }
 }

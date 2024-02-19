@@ -34,10 +34,10 @@ public class TravelDbContext : DbContext
             new() { MealTypeId = 1, MealTypeName = "Lunch" },
              new() { MealTypeId = 2, MealTypeName = "Dinner" },
               new() { MealTypeId = 3, MealTypeName = "Both" });
-        modelBuilder.Entity<Booking>().HasData(
-            new() { BookingId = 1, BookingTypeName = "Air ticket Only" },
-             new() { BookingId = 2, BookingTypeName = "Hotel Only" },
-              new() { BookingId = 3, BookingTypeName = "Both" });
+        modelBuilder.Entity<BookingType>().HasData(
+            new() { BookingTypeId = 1, BookingTypeName = "Air ticket Only" },
+             new() { BookingTypeId = 2, BookingTypeName = "Hotel Only" },
+              new() { BookingTypeId = 3, BookingTypeName = "Both" });
         modelBuilder.Entity<FlightType>().HasData(
             new() { FlightTypeId = 1, FlightTypeName = "Domestic" },
              new() { FlightTypeId = 2, FlightTypeName = "International" });
@@ -98,13 +98,13 @@ public class TravelDbContext : DbContext
     public DbSet<Role> Roles { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Department> Departments { get; set; }
-    public DbSet<Booking> Bookings { get; set; }
+    public DbSet<BookingType> Bookings { get; set; }
     public DbSet<FlightType> FlightTypes { get; set; }
     public DbSet<Location> Locations { get; set; }
     public DbSet<MealPreferenceType> MealPreferenceTypes { get; set;}
     public DbSet<MealType> MealTypes { get; set; }
     public DbSet<Project> Projects { get; set; }
     public DbSet<Request> Requests { get; set; }
-    public DbSet<Status> Statuss { get; set; }
+    public DbSet<Status> EmployeeRequestStatus { get; set; }
 
 }

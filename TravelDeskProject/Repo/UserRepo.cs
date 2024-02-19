@@ -145,7 +145,39 @@ namespace TravelDeskProject.Repo
             }
             return roleId.RoleId;
         }
-      
+        public string GetDepartmentName(LoginViewModel loginuser)
+        {
+            var temp = _db.Users.Where(x => x.Email == loginuser.Email).FirstOrDefault();
+            if (temp == null)
+            {
+                return string.Empty;
+            }
+            int departmentId = temp.DepartmentId;
+            var departmentName=_db.Departments.Where(x=>x.DepartmentId == departmentId).FirstOrDefault();
+            return departmentName.DepartmentName;
+        }
+        public int GetDepartmentId(LoginViewModel loginuser)
+        {
+            var temp = _db.Users.Where(x => x.Email == loginuser.Email).FirstOrDefault();
+            if (temp == null)
+            {
+                return 0;
+            }
+            return temp.DepartmentId;
+           
+        }
+        public string GetFirstName(LoginViewModel loginuser)
+        {
+            var temp=_db.Users.Where(x=>x.Email == loginuser.Email).FirstOrDefault();
+            if (temp == null)
+            {
+                return string.Empty;
+            }
+            return temp.FirstName;
+        }
+
+
+
 
     }
 }

@@ -1,8 +1,8 @@
 ﻿namespace TravelDeskProject.Models
 {
-    public class Booking
+    public class BookingType
     {
-        public int BookingId { get; set; }
+        public int BookingTypeId { get; set; }
         public string BookingTypeName { get; set; }
         public int CreateBy { get; set; }
         public int? UpdateBy { get; set; } = null;

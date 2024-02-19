@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Mvc;
 using TravelDeskProject.IRepo;
 using TravelDeskProject.Models;
 
@@ -26,13 +27,17 @@ namespace TravelDeskProject.Repo
             return _db.Requests.ToList();
 
         }
-        public List<Booking> GetBookingTypes()
+        public List<BookingType> GetBookingTypes()
         {
             return _db.Bookings.ToList();
         }
         public List<FlightType> GetFlightTypes()
         {
             return _db.FlightTypes.ToList();
+        }
+        public List<Location> GetAllLocations()
+        {
+            return _db.Locations.ToList();
         }
         public List<Location> GetDomesticLocations()
         {
@@ -56,7 +61,12 @@ namespace TravelDeskProject.Repo
         }
         public List<Status> GetStatus()
         {
-            return _db.Statuss.ToList();
+            return _db.EmployeeRequestStatus.ToList();
+        }
+        public List<Request> PreviousRequests(int id)
+        {
+            List<Request> previousRequests = _db.Requests.Where(x=>x.UserId == id && x.IsActive == true).ToList();
+            return previousRequests;
         }
 
     }

@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Net.Http.Headers;
+using System.Reflection.Metadata;
 using TravelDeskProject.IRepo;
 using TravelDeskProject.Models;
 
@@ -15,11 +17,15 @@ namespace TravelDeskProject.Controllers
         }
         [HttpPost]
         [Route("AddRequest")]
-        public IActionResult AddRequest(Request Request)
+        public IActionResult AddRequest(Request request)
         {
             if (Request != null)
             {
-                _requestRepo.AddRequest(Request);
+                request.CreatedBy = request.UserId;
+                request.StatusId = 1;
+                request.IsActive = true;
+                request.CreatedOn= DateTime.Now;
+                _requestRepo.AddRequest(request);
                 return Ok("Added successfully !");
             }
             else
@@ -28,6 +34,47 @@ namespace TravelDeskProject.Controllers
             }
 
         }
+        [HttpPost("Upload")]
+        public void UploadFiles(IFormFile passportFile, IFormFile visaFile, string employeeName, string employeeID)
+        {
+            //List<string> data = new List<string>();
+            var folderName = $"{employeeName}_{employeeID}";
+            var filePath1 =
+                //change path 
+                Path.Combine(@"C:\Users\PriyaJaiswal\Desktop\Assessment\CSharp\TravelDeskProject\Documents",
+                folderName);
+            if (!Directory.Exists(filePath1))
+            {
+                Directory.CreateDirectory(filePath1);
+            }
+            if (passportFile != null && passportFile.Length > 0)
+            {
+
+                var todayDate = DateTime.Now.ToString("yyyyMMdd");
+                var passportFileName = $"{employeeName}_passport_{todayDate}{Path.GetExtension(passportFile.FileName)}";
+                var passportFilePath = Path.Combine(filePath1, passportFileName);
+
+                using (var stream = new FileStream(passportFilePath, FileMode.Create))
+                {
+                    passportFile.CopyTo(stream);
+                    //data.Add("Passport");
+                }
+            }
+
+            if (visaFile != null && visaFile.Length > 0)
+            {
+                var todayDate = DateTime.Now.ToString("yyyyMMdd");
+                var visaFileName = $"{employeeName}_visa{todayDate}{Path.GetExtension(visaFile.FileName)}";
+                var visaFilePath = Path.Combine(filePath1, visaFileName);
+                using (var stream = new FileStream(visaFilePath, FileMode.Create))
+                {
+                    visaFile.CopyTo(stream);
+                    //data.Add("Visa");
+                }
+            }
+            //return data;
+        }
+
         [HttpGet]
         [Route("GetRequests")]
         public IActionResult GetRequests()
@@ -40,7 +87,7 @@ namespace TravelDeskProject.Controllers
         [Route("GetBookingTypes")]
         public IActionResult GetBookingTypes()
         {
-            List<Booking> bookingTypes = _requestRepo.GetBookingTypes();
+            List<BookingType> bookingTypes = _requestRepo.GetBookingTypes();
             return Ok(bookingTypes);
 
         }
@@ -50,6 +97,14 @@ namespace TravelDeskProject.Controllers
         {
             List<FlightType> flightTypes = _requestRepo.GetFlightTypes();
             return Ok(flightTypes);
+        }
+        [HttpGet]
+        [Route("GetAllLocations")]
+        public IActionResult GetAllLocations()
+        {
+            List<Location> getAllLocations = _requestRepo.GetAllLocations();
+            return Ok(getAllLocations);
+
         }
         [HttpGet]
         [Route("GetDomesticLocations")]
@@ -94,6 +149,13 @@ namespace TravelDeskProject.Controllers
         {
             List<Status> statuses = _requestRepo.GetStatus();
             return Ok(statuses);
+        }
+        [HttpGet]
+        [Route("PreviousRequests")]
+        public IActionResult PreviousRequests(int id)
+        {
+            List<Request> previousRequests = _requestRepo.PreviousRequests(id);
+            return Ok(previousRequests);
         }
     }
 }

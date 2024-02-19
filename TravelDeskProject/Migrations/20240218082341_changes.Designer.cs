@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace TravelDeskProject.Migrations
 {
     [DbContext(typeof(TravelDbContext))]
-    partial class TravelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240218082341_changes")]
+    partial class changes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,7 +69,7 @@ namespace TravelDeskProject.Migrations
                     b.Property<int>("ManagerId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MealPreferenceTypeId")
+                    b.Property<int?>("MealPreferenceId")
                         .HasColumnType("int");
 
                     b.Property<int?>("MealTypeId")
@@ -105,6 +108,12 @@ namespace TravelDeskProject.Migrations
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
+
+                    b.Property<string>("commentsFromHR")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("commentsFromManager")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RequestId");
 
@@ -207,7 +216,7 @@ namespace TravelDeskProject.Migrations
                         {
                             DepartmentId = 1,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 18, 15, 32, 54, 852, DateTimeKind.Local).AddTicks(2706),
+                            CreatedOn = new DateTime(2024, 2, 18, 13, 53, 41, 40, DateTimeKind.Local).AddTicks(4958),
                             DepartmentName = "IT",
                             IsActive = false
                         },
@@ -215,7 +224,7 @@ namespace TravelDeskProject.Migrations
                         {
                             DepartmentId = 2,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 18, 15, 32, 54, 852, DateTimeKind.Local).AddTicks(2708),
+                            CreatedOn = new DateTime(2024, 2, 18, 13, 53, 41, 40, DateTimeKind.Local).AddTicks(4961),
                             DepartmentName = "Sales",
                             IsActive = false
                         },
@@ -223,7 +232,7 @@ namespace TravelDeskProject.Migrations
                         {
                             DepartmentId = 3,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 18, 15, 32, 54, 852, DateTimeKind.Local).AddTicks(2709),
+                            CreatedOn = new DateTime(2024, 2, 18, 13, 53, 41, 40, DateTimeKind.Local).AddTicks(4963),
                             DepartmentName = "HR",
                             IsActive = false
                         });
@@ -265,7 +274,7 @@ namespace TravelDeskProject.Migrations
                         {
                             FlightTypeId = 1,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 18, 15, 32, 54, 852, DateTimeKind.Local).AddTicks(2596),
+                            CreatedOn = new DateTime(2024, 2, 18, 13, 53, 41, 40, DateTimeKind.Local).AddTicks(4845),
                             FlightTypeName = "Domestic",
                             IsActive = false
                         },
@@ -273,7 +282,7 @@ namespace TravelDeskProject.Migrations
                         {
                             FlightTypeId = 2,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 18, 15, 32, 54, 852, DateTimeKind.Local).AddTicks(2599),
+                            CreatedOn = new DateTime(2024, 2, 18, 13, 53, 41, 40, DateTimeKind.Local).AddTicks(4855),
                             FlightTypeName = "International",
                             IsActive = false
                         });
@@ -321,7 +330,7 @@ namespace TravelDeskProject.Migrations
                             City = "Noida",
                             Country = "India",
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 18, 15, 32, 54, 852, DateTimeKind.Local).AddTicks(2681),
+                            CreatedOn = new DateTime(2024, 2, 18, 13, 53, 41, 40, DateTimeKind.Local).AddTicks(4922),
                             IsActive = false
                         },
                         new
@@ -330,7 +339,7 @@ namespace TravelDeskProject.Migrations
                             City = "Pune",
                             Country = "India",
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 18, 15, 32, 54, 852, DateTimeKind.Local).AddTicks(2683),
+                            CreatedOn = new DateTime(2024, 2, 18, 13, 53, 41, 40, DateTimeKind.Local).AddTicks(4925),
                             IsActive = false
                         },
                         new
@@ -339,7 +348,7 @@ namespace TravelDeskProject.Migrations
                             City = "London",
                             Country = "England",
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 18, 15, 32, 54, 852, DateTimeKind.Local).AddTicks(2685),
+                            CreatedOn = new DateTime(2024, 2, 18, 13, 53, 41, 40, DateTimeKind.Local).AddTicks(4928),
                             IsActive = false
                         },
                         new
@@ -348,7 +357,7 @@ namespace TravelDeskProject.Migrations
                             City = "Dubai",
                             Country = "United Arab Emirates",
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 18, 15, 32, 54, 852, DateTimeKind.Local).AddTicks(2686),
+                            CreatedOn = new DateTime(2024, 2, 18, 13, 53, 41, 40, DateTimeKind.Local).AddTicks(4929),
                             IsActive = false
                         });
                 });
@@ -389,7 +398,7 @@ namespace TravelDeskProject.Migrations
                         {
                             MealPreferenceTypeId = 1,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 18, 15, 32, 54, 852, DateTimeKind.Local).AddTicks(2511),
+                            CreatedOn = new DateTime(2024, 2, 18, 13, 53, 41, 40, DateTimeKind.Local).AddTicks(1968),
                             IsActive = false,
                             MealPreferenceName = "Veg"
                         },
@@ -397,7 +406,7 @@ namespace TravelDeskProject.Migrations
                         {
                             MealPreferenceTypeId = 2,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 18, 15, 32, 54, 852, DateTimeKind.Local).AddTicks(2515),
+                            CreatedOn = new DateTime(2024, 2, 18, 13, 53, 41, 40, DateTimeKind.Local).AddTicks(1972),
                             IsActive = false,
                             MealPreferenceName = "Non-Veg"
                         });
@@ -439,7 +448,7 @@ namespace TravelDeskProject.Migrations
                         {
                             MealTypeId = 1,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 18, 15, 32, 54, 852, DateTimeKind.Local).AddTicks(2542),
+                            CreatedOn = new DateTime(2024, 2, 18, 13, 53, 41, 40, DateTimeKind.Local).AddTicks(2006),
                             IsActive = false,
                             MealTypeName = "Lunch"
                         },
@@ -447,7 +456,7 @@ namespace TravelDeskProject.Migrations
                         {
                             MealTypeId = 2,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 18, 15, 32, 54, 852, DateTimeKind.Local).AddTicks(2544),
+                            CreatedOn = new DateTime(2024, 2, 18, 13, 53, 41, 40, DateTimeKind.Local).AddTicks(2009),
                             IsActive = false,
                             MealTypeName = "Dinner"
                         },
@@ -455,7 +464,7 @@ namespace TravelDeskProject.Migrations
                         {
                             MealTypeId = 3,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 18, 15, 32, 54, 852, DateTimeKind.Local).AddTicks(2545),
+                            CreatedOn = new DateTime(2024, 2, 18, 13, 53, 41, 40, DateTimeKind.Local).AddTicks(2011),
                             IsActive = false,
                             MealTypeName = "Both"
                         });
@@ -497,7 +506,7 @@ namespace TravelDeskProject.Migrations
                         {
                             ProjectId = 1,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 18, 15, 32, 54, 852, DateTimeKind.Local).AddTicks(2154),
+                            CreatedOn = new DateTime(2024, 2, 18, 13, 53, 41, 40, DateTimeKind.Local).AddTicks(1710),
                             IsActive = false,
                             ProjectName = "GBS-UK"
                         },
@@ -505,7 +514,7 @@ namespace TravelDeskProject.Migrations
                         {
                             ProjectId = 2,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 18, 15, 32, 54, 852, DateTimeKind.Local).AddTicks(2170),
+                            CreatedOn = new DateTime(2024, 2, 18, 13, 53, 41, 40, DateTimeKind.Local).AddTicks(1729),
                             IsActive = false,
                             ProjectName = "GBS-Dubai"
                         },
@@ -513,7 +522,7 @@ namespace TravelDeskProject.Migrations
                         {
                             ProjectId = 3,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 18, 15, 32, 54, 852, DateTimeKind.Local).AddTicks(2171),
+                            CreatedOn = new DateTime(2024, 2, 18, 13, 53, 41, 40, DateTimeKind.Local).AddTicks(1731),
                             IsActive = false,
                             ProjectName = "GBS-Noida"
                         });
@@ -555,7 +564,7 @@ namespace TravelDeskProject.Migrations
                         {
                             RoleId = 1,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 18, 15, 32, 54, 852, DateTimeKind.Local).AddTicks(2732),
+                            CreatedOn = new DateTime(2024, 2, 18, 13, 53, 41, 40, DateTimeKind.Local).AddTicks(4994),
                             IsActive = false,
                             RoleName = "Admin"
                         },
@@ -563,7 +572,7 @@ namespace TravelDeskProject.Migrations
                         {
                             RoleId = 2,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 18, 15, 32, 54, 852, DateTimeKind.Local).AddTicks(2734),
+                            CreatedOn = new DateTime(2024, 2, 18, 13, 53, 41, 40, DateTimeKind.Local).AddTicks(4998),
                             IsActive = false,
                             RoleName = "HRAdmin"
                         },
@@ -571,7 +580,7 @@ namespace TravelDeskProject.Migrations
                         {
                             RoleId = 3,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 18, 15, 32, 54, 852, DateTimeKind.Local).AddTicks(2735),
+                            CreatedOn = new DateTime(2024, 2, 18, 13, 53, 41, 40, DateTimeKind.Local).AddTicks(5000),
                             IsActive = false,
                             RoleName = "Employee"
                         },
@@ -579,7 +588,7 @@ namespace TravelDeskProject.Migrations
                         {
                             RoleId = 4,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 18, 15, 32, 54, 852, DateTimeKind.Local).AddTicks(2736),
+                            CreatedOn = new DateTime(2024, 2, 18, 13, 53, 41, 40, DateTimeKind.Local).AddTicks(5002),
                             IsActive = false,
                             RoleName = "Manager"
                         });
@@ -614,14 +623,14 @@ namespace TravelDeskProject.Migrations
 
                     b.HasKey("StatusId");
 
-                    b.ToTable("EmployeeRequestStatus");
+                    b.ToTable("Statuss");
 
                     b.HasData(
                         new
                         {
                             StatusId = 1,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 18, 15, 32, 54, 852, DateTimeKind.Local).AddTicks(2653),
+                            CreatedOn = new DateTime(2024, 2, 18, 13, 53, 41, 40, DateTimeKind.Local).AddTicks(4890),
                             IsActive = false,
                             StatusName = "Pending"
                         },
@@ -629,7 +638,7 @@ namespace TravelDeskProject.Migrations
                         {
                             StatusId = 2,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 18, 15, 32, 54, 852, DateTimeKind.Local).AddTicks(2659),
+                            CreatedOn = new DateTime(2024, 2, 18, 13, 53, 41, 40, DateTimeKind.Local).AddTicks(4894),
                             IsActive = false,
                             StatusName = "Rejected"
                         },
@@ -637,7 +646,7 @@ namespace TravelDeskProject.Migrations
                         {
                             StatusId = 3,
                             CreateBy = 0,
-                            CreatedOn = new DateTime(2024, 2, 18, 15, 32, 54, 852, DateTimeKind.Local).AddTicks(2660),
+                            CreatedOn = new DateTime(2024, 2, 18, 13, 53, 41, 40, DateTimeKind.Local).AddTicks(4896),
                             IsActive = false,
                             StatusName = "Approved"
                         });
@@ -718,7 +727,7 @@ namespace TravelDeskProject.Migrations
                             UserId = 1,
                             Address = "Mzp",
                             CreatedBy = 1,
-                            CreatedOn = new DateTime(2024, 2, 18, 15, 32, 54, 852, DateTimeKind.Local).AddTicks(2759),
+                            CreatedOn = new DateTime(2024, 2, 18, 13, 53, 41, 40, DateTimeKind.Local).AddTicks(5040),
                             DepartmentId = 1,
                             Email = "priya@gmail.com",
                             FirstName = "Priya",
@@ -733,7 +742,7 @@ namespace TravelDeskProject.Migrations
                             UserId = 2,
                             Address = "Delhi",
                             CreatedBy = 1,
-                            CreatedOn = new DateTime(2024, 2, 18, 15, 32, 54, 852, DateTimeKind.Local).AddTicks(2765),
+                            CreatedOn = new DateTime(2024, 2, 18, 13, 53, 41, 40, DateTimeKind.Local).AddTicks(5048),
                             DepartmentId = 2,
                             Email = "erica@gmail.com",
                             FirstName = "Erica",

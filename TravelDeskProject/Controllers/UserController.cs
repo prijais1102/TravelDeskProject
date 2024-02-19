@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -26,7 +27,7 @@ namespace TravelDeskProject.Controllers
             _context = context;
 
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("GetUser/{id}")]
         public IActionResult GetUser(int id)
@@ -36,8 +37,10 @@ namespace TravelDeskProject.Controllers
 
 
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [Route("AddUser")]
+       
         public IActionResult AddUser(User user)
         {
 
@@ -46,6 +49,7 @@ namespace TravelDeskProject.Controllers
         }
         [HttpGet]
         [Route("AllUsers")]
+        //extra api...caching is used in this.
         public async Task<IActionResult> AllUsers()
         {
             var cacheKey = "UserList";
@@ -67,6 +71,7 @@ namespace TravelDeskProject.Controllers
             }
             return Ok(UserList);
         }
+        [Authorize(Roles ="Admin")]
         [HttpDelete]
         [Route("DeleteUser/{id}")]
         public IActionResult DeleteUser(int id)
@@ -74,6 +79,7 @@ namespace TravelDeskProject.Controllers
             _userRepo.DeleteUser(id);
             return Ok("User deleted Successfully!!!");
         }
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         [Route("EditUser/{id}")]
         public IActionResult EditUser(int id, User user)
@@ -111,6 +117,7 @@ namespace TravelDeskProject.Controllers
 
             return roles;
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("UserDetails/{id}")]
         public IActionResult UserDetails(int id)

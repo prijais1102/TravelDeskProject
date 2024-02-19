@@ -16,7 +16,6 @@ namespace TravelDeskProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class LoginController : ControllerBase
     {
         ILoginRepo _loginRepo;
@@ -39,10 +38,16 @@ namespace TravelDeskProject.Controllers
                 int roleId = _userRepo.GetRoleId(loginuser);
                 string role = _userRepo.GetRoleName(roleId);
                 var userId = _userRepo.GetUserId(loginuser);
+                var departmentName = _userRepo.GetDepartmentName(loginuser);
+                var departmentId = _userRepo.GetDepartmentId(loginuser);
+                string firstName = _userRepo.GetFirstName(loginuser);
                 var claims = new List<Claim>();
                 claims.Add(new Claim("email", loginuser.Email));
                 claims.Add(new Claim("role", role));
                 claims.Add(new Claim("userId",userId.ToString()));
+                claims.Add(new Claim("departmentName", departmentName));
+                claims.Add(new Claim("departmentId", departmentId.ToString()));
+                claims.Add(new Claim("firstName", firstName));
 
                 var tokenString = GenerateJSONWebToken(claims.ToArray());
                 return Ok(new { token = tokenString });

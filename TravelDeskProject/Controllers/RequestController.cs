@@ -3,6 +3,7 @@ using System.Net.Http.Headers;
 using System.Reflection.Metadata;
 using TravelDeskProject.IRepo;
 using TravelDeskProject.Models;
+using TravelDeskProject.ViewModel;
 
 namespace TravelDeskProject.Controllers
 {
@@ -151,11 +152,56 @@ namespace TravelDeskProject.Controllers
             return Ok(statuses);
         }
         [HttpGet]
-        [Route("PreviousRequests")]
-        public IActionResult PreviousRequests(int id)
+        [Route("GetPreviousRequests")]
+        public IActionResult GetPreviousRequests(int id)
         {
-            List<Request> previousRequests = _requestRepo.PreviousRequests(id);
+            List<Request> previousRequests = _requestRepo.GetPreviousRequests(id);
             return Ok(previousRequests);
         }
-    }
+        [HttpGet]
+        [Route("GetRequestDetailsById")]
+        public IActionResult GetRequestDetailsById(int id)
+        {
+            Request requestdetails = _requestRepo.GetRequestDetailsById(id);
+            return Ok(requestdetails);
+        }
+        [HttpDelete]
+        [Route("DeleteRequest")]
+        public IActionResult DeleteRequest(int id)
+        {
+            var message = _requestRepo.DeleteRequest(id);
+            return Ok(message);
+        }
+        [HttpGet]
+        [Route("GetRequestDetailsByManagerId")]
+        public IActionResult GetRequestDetailsByManagerId(int id)
+        {
+            List<Request> list = _requestRepo.GetRequestDetailsByManagerId(id);
+            return Ok(list);
+        }
+        [HttpGet]
+        [Route("GetRequestsForHRAdmin")]
+        public IActionResult GetRequestsForHRAdmin()
+        {
+            List<Request> list = _requestRepo.GetRequestsForHRAdmin();
+            return Ok(list);
+        }
+        [HttpPut]
+        [Route("UpdateStatusWithReason")]
+        public IActionResult UpdateStatusWithReason(int id, UpdateStatusModel data)
+        {
+            string message =_requestRepo.UpdateStatusWithReason(id,data);
+            return Ok(message);
+
+        }
+        [HttpPut]
+        [Route("UpdateBookingId")]
+        public IActionResult UpdateBookingId(int id, int referenceNumber)
+        {
+            string temp=_requestRepo.UpdateBookingId(id,referenceNumber);
+            return Ok(temp);
+
+
+        }
+    } 
 }

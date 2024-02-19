@@ -13,7 +13,7 @@ namespace TravelDeskProject.Repo
         }
         public bool Login(LoginViewModel loginuser)
         {
-            var user = _db.Users.FirstOrDefault(x => x.Email == loginuser.Email);
+            var user = _db.Users.FirstOrDefault(x => x.Email == loginuser.Email && x.IsActive==true);
             if (user == null)
             {
                 return false;

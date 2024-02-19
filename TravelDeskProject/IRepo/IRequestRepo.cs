@@ -1,5 +1,6 @@
 ﻿
 using TravelDeskProject.Models;
+using TravelDeskProject.ViewModel;
 
 namespace TravelDeskProject.IRepo
 {
@@ -16,6 +17,12 @@ namespace TravelDeskProject.IRepo
         public List<MealType> GetMealTypes();
         public List<Project> GetProjects();
         public List<Status> GetStatus();
-        public List<Request> PreviousRequests(int id);
+        public List<Request> GetPreviousRequests(int id);
+        public Request GetRequestDetailsById(int id);
+        public string DeleteRequest(int id);
+        public List<Request> GetRequestDetailsByManagerId(int id);
+        public List<Request> GetRequestsForHRAdmin();
+        public string UpdateStatusWithReason(int id, UpdateStatusModel data);
+        public string UpdateBookingId(int id, int referenceNumber);
     }
 }

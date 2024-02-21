@@ -17,12 +17,15 @@ namespace TravelDeskProject.IRepo
         public List<MealType> GetMealTypes();
         public List<Project> GetProjects();
         public List<Status> GetStatus();
-        public List<Request> GetPreviousRequests(int id);
+        public List<RequestViewModel> GetPreviousRequests(int id);
         public Request GetRequestDetailsById(int id);
         public string DeleteRequest(int id);
-        public List<Request> GetRequestDetailsByManagerId(int id);
+        public List<RequestViewModel> GetRequestDetailsByManagerId(int id);
         public List<Request> GetRequestsForHRAdmin();
-        public string UpdateStatusWithReason(int id, UpdateStatusModel data);
-        public string UpdateBookingId(int id, int referenceNumber);
+        public string UpdateStatusWithReason( UpdateStatusModel data);
+        public string UpdateBookingId(int id, BookingIdViewModel referenceNumber);
+        public string GetStatusName(int id);
+        public List<RequestViewModel> GetApprovedRequests();
+
     }
 }

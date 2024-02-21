@@ -152,31 +152,31 @@ namespace TravelDeskProject.Controllers
             return Ok(statuses);
         }
         [HttpGet]
-        [Route("GetPreviousRequests")]
+        [Route("GetPreviousRequests/{id}")]
         public IActionResult GetPreviousRequests(int id)
         {
-            List<Request> previousRequests = _requestRepo.GetPreviousRequests(id);
+            List<RequestViewModel> previousRequests = _requestRepo.GetPreviousRequests(id);
             return Ok(previousRequests);
         }
         [HttpGet]
-        [Route("GetRequestDetailsById")]
+        [Route("GetRequestDetailsById/{id}")]
         public IActionResult GetRequestDetailsById(int id)
         {
             Request requestdetails = _requestRepo.GetRequestDetailsById(id);
             return Ok(requestdetails);
         }
         [HttpDelete]
-        [Route("DeleteRequest")]
+        [Route("DeleteRequest/{id}")]
         public IActionResult DeleteRequest(int id)
         {
             var message = _requestRepo.DeleteRequest(id);
             return Ok(message);
         }
         [HttpGet]
-        [Route("GetRequestDetailsByManagerId")]
+        [Route("GetRequestDetailsByManagerId/{id}")]
         public IActionResult GetRequestDetailsByManagerId(int id)
         {
-            List<Request> list = _requestRepo.GetRequestDetailsByManagerId(id);
+            List<RequestViewModel> list = _requestRepo.GetRequestDetailsByManagerId(id);
             return Ok(list);
         }
         [HttpGet]
@@ -188,20 +188,34 @@ namespace TravelDeskProject.Controllers
         }
         [HttpPut]
         [Route("UpdateStatusWithReason")]
-        public IActionResult UpdateStatusWithReason(int id, UpdateStatusModel data)
+        public IActionResult UpdateStatusWithReason( UpdateStatusModel data)
         {
-            string message =_requestRepo.UpdateStatusWithReason(id,data);
+            string message =_requestRepo.UpdateStatusWithReason(data);
             return Ok(message);
 
         }
         [HttpPut]
-        [Route("UpdateBookingId")]
-        public IActionResult UpdateBookingId(int id, int referenceNumber)
+        [Route("UpdateBookingId/{id}")]
+        public IActionResult UpdateBookingId(int id, BookingIdViewModel referenceNumber)
         {
             string temp=_requestRepo.UpdateBookingId(id,referenceNumber);
             return Ok(temp);
 
 
+        }
+        [HttpGet]
+        [Route("GetStatusName/{id}")]
+        public IActionResult GetStatusName(int id)
+        {
+            string statusname = _requestRepo.GetStatusName(id);
+            return Ok(statusname);
+        }
+        [HttpGet]
+        [Route("GetApprovedRequests")]
+        public IActionResult GetApprovedRequests()
+        {
+            List<RequestViewModel> list= _requestRepo.GetApprovedRequests();
+            return Ok(list);
         }
     } 
 }

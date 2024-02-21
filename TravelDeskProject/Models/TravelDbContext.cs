@@ -81,19 +81,35 @@ public class TravelDbContext : DbContext
         new User
         {
             UserId = 2,
-            FirstName = "Erica",
-            LastName = "Attal",
-            Email = "erica@gmail.com",
-            Password = "Erica@123",
-            Address = "Delhi",
-            MobileNumber = "9090909090",
+            FirstName = "Abhinav",
+            LastName = "Deep",
+            Email = "abhinav@gmail.com",
+            Password = "Abhinav@123",
+            Address = "Bihar",
+            MobileNumber = "9987231453",
             CreatedBy = 1,
             CreatedOn = DateTime.Now,
             IsActive = true,
             RoleId = 4,
-            DepartmentId = 2,
+            DepartmentId = 1,
             ManagerId = 1
-        });
+        },
+         new User
+         {
+             UserId = 3,
+             FirstName = "Saurav",
+             LastName = "Tandon",
+             Email = "saurav@gmail.com",
+             Password = "Saurav@123",
+             Address = "Lucknow",
+             MobileNumber = "9898765432",
+             CreatedBy = 1,
+             CreatedOn = DateTime.Now,
+             IsActive = true,
+             RoleId = 2,
+             DepartmentId = 1,
+             ManagerId = 1
+         });
     }
     public DbSet<Role> Roles { get; set; }
     public DbSet<User> Users { get; set; }

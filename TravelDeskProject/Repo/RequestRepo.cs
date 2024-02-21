@@ -66,10 +66,22 @@ namespace TravelDeskProject.Repo
         {
             return _db.EmployeeRequestStatus.ToList();
         }
-        public List<Request> GetPreviousRequests(int id)
+        public List<RequestViewModel> GetPreviousRequests(int id)
         {
-            List<Request> previousRequests = _db.Requests.Where(x=>x.UserId == id && x.IsActive == true).ToList();
-            return previousRequests;
+            var query =
+           (from request in _db.Requests
+            join status in _db.EmployeeRequestStatus on request.StatusId equals status.StatusId
+            join bookingType in _db.Bookings on request.BookingTypeId equals bookingType.BookingTypeId
+            where request.IsActive == true
+            select new RequestViewModel
+            {
+                RequestId = request.RequestId,
+                ReasonForTravelling = request.ReasonForTravelling,
+                BookingTypeName = bookingType.BookingTypeName,
+                StatusName = status.StatusName,
+                StatusReason=request.StatusReason,
+            }).ToList();
+            return query;
         }
         public Request GetRequestDetailsById(int id)
         {
@@ -87,19 +99,32 @@ namespace TravelDeskProject.Repo
             _db.SaveChanges();
             return "Request deleted successfully";
         }
-        public List<Request> GetRequestDetailsByManagerId(int id)
+        public List<RequestViewModel> GetRequestDetailsByManagerId(int id)
         {
-            List<Request> list=_db.Requests.Where(x=>x.ManagerId == id).ToList();
-            return list;
+            var query =
+          (from request in _db.Requests
+           join status in _db.EmployeeRequestStatus on request.StatusId equals status.StatusId
+           join bookingType in _db.Bookings on request.BookingTypeId equals bookingType.BookingTypeId
+           where request.IsActive == true && request.ManagerId==id
+
+           select new RequestViewModel
+           {
+               RequestId = request.RequestId,
+               ReasonForTravelling = request.ReasonForTravelling,
+               BookingTypeName = bookingType.BookingTypeName,
+               StatusName = status.StatusName,
+               StatusReason = request.StatusReason,
+           }).ToList();
+            return query;
         }
         public List<Request> GetRequestsForHRAdmin()
         {
             List<Request> list=_db.Requests.Where(x=>x.StatusId == 3).ToList();
             return list;
         }
-        public string UpdateStatusWithReason(int id,UpdateStatusModel data)
+        public string UpdateStatusWithReason(UpdateStatusModel data)
         {
-            var temp=_db.Requests.Where(x=>x.RequestId==id).FirstOrDefault();
+            var temp=_db.Requests.Where(x=>x.RequestId==data.RequestId).FirstOrDefault();
             if(temp !=null)
             {
                 temp.StatusId = data.StatusId;
@@ -112,17 +137,49 @@ namespace TravelDeskProject.Repo
             }
             return "No request found.";
         }
-        public string UpdateBookingId(int id, int referenceNumber)
+        public List<RequestViewModel> GetApprovedRequests()
+        {
+            var query =
+          (from request in _db.Requests
+           join status in _db.EmployeeRequestStatus on request.StatusId equals status.StatusId
+           join bookingType in _db.Bookings on request.BookingTypeId equals bookingType.BookingTypeId
+           where request.IsActive == true && request.StatusId == 3
+
+           select new RequestViewModel
+           {
+               RequestId = request.RequestId,
+               ReasonForTravelling = request.ReasonForTravelling,
+               BookingTypeName = bookingType.BookingTypeName,
+               StatusName = status.StatusName,
+               StatusReason = request.StatusReason,
+           }).ToList();
+            return query;
+        }
+        public string UpdateBookingId(int id, BookingIdViewModel referenceNumber)
         {
             var temp=_db.Requests.Where(x=>x.RequestId == id).FirstOrDefault();
             if(temp !=null)
             {
-                temp.BookingId = referenceNumber;
+                temp.BookingId = referenceNumber.BookingId;
                 _db.Requests.Update(temp);
                 _db.SaveChanges();
                 return "Booking Id has been generated.";
             }
             return "No request found.";           
+        }
+        public string GetStatusName(int id)
+        {
+            var temp=_db.Requests.Where(x=>x.UserId == id && x.IsActive==true).FirstOrDefault();
+            if (temp!=null)
+            {
+                int statusId = temp.StatusId;
+                var temp1=_db.EmployeeRequestStatus.Where(x=>x.StatusId==statusId).FirstOrDefault();
+                if(temp1!=null)
+                {
+                    return temp1.StatusName;
+                }
+            }
+            return "Request Not Found";
         }
     }
 }
